@@ -3,7 +3,6 @@ package edu.orangecoastcollege.sbadajoz.ic16;
 public class HotelRoom {
     private int mRoomNumber;
     private int mPeopleInRoom;
-    private static int mTotalOccupancy;
     
     public HotelRoom(int roomNumber, int numberOfPeople) {
         if(numberOfPeople < 0 || numberOfPeople > 4) throw new IllegalArgumentException("Number of occupants must be between 0 and 4");

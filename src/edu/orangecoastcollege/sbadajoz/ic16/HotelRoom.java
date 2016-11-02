@@ -1,26 +1,39 @@
 package edu.orangecoastcollege.sbadajoz.ic16;
 
+import java.lang.IllegalArgumentException;
+
 public class HotelRoom {
     private int mRoomNumber;
     private int mPeopleInRoom;
+    private static int mTotalOccupany;
     
     public HotelRoom(int roomNumber, int numberOfPeople) {
         if(numberOfPeople < 0 || numberOfPeople > 4) throw new IllegalArgumentException("Number of occupants must be between 0 and 4");
         mRoomNumber = roomNumber;
         mPeopleInRoom = numberOfPeople;
+        mTotalOccupany += numberOfPeople;
     }
     
     public void addToRoom(int numberOfPeople) {
-        if(numberOfPeople + mPeopleInRoom < 4) mPeopleInRoom += numberOfPeople;
+        if(numberOfPeople + mPeopleInRoom > 4) throw new IllegalArgumentException("There cannot be more than 4 occupants in a room.");
+        mPeopleInRoom += numberOfPeople;
+        mTotalOccupany += numberOfPeople;
     }
     
     public void removeFromRoom(int numberOfPeople) {
-        if(mPeopleInRoom - numberOfPeople > -1) mPeopleInRoom -= numberOfPeople;
+        if(mPeopleInRoom - numberOfPeople < 0) throw new IllegalArgumentException("There cannot be less than 0 occumants in a room.");
+        mPeopleInRoom -= numberOfPeople;
+        mTotalOccupany += numberOfPeople;
     }
     
     public int getNumberOfPeople() {
         return mPeopleInRoom;
     }
+
+    public int getTotalOccupany() {
+        return mTotalOccupany;
+    }
+
 
     @Override
     public int hashCode()
@@ -40,8 +53,7 @@ public class HotelRoom {
         if (getClass() != obj.getClass()) return false;
         HotelRoom other = (HotelRoom) obj;
         if (mPeopleInRoom != other.mPeopleInRoom) return false;
-        if (mRoomNumber != other.mRoomNumber) return false;
-        return true;
+        return mRoomNumber == other.mRoomNumber;
     }
 
     @Override
